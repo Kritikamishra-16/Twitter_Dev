@@ -33,6 +33,11 @@ const tweetSchema= new mongoose.Schema({
     ***********************/
 }, {timestamps : true});
 
+//VIRTUALS: Virtuals are document properties that you can get and set but that do not get persisted to MongoDB(not visible on mongoDB document in compass).
+tweetSchema.virtual('contentWithEmail').get(function process(){
+    return `${this.content} \nCreated by:  ${this.userEmail}`;
+});
+
 //create a model having a name 'Tweet' and will follow the tweetSchema
 const Tweet= mongoose.model('Tweet', tweetSchema);
 module.exports= Tweet;

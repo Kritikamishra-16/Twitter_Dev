@@ -12,12 +12,18 @@ app.listen(3000, async ()=>{
     await connect();
     console.log('Mongo db connected');
 
+    const tweetRepo=new TweetRepiository();
+    const tweet=await tweetRepo.getAll(0,4);
+    console.log(tweet[0].contentWithEmail);
+
+
+    /****************************************************
     //GET THE TWEET (NESTED COMMENT SCHEMA)
     const tweetRepo=new TweetRepiository();
     const tweet=await tweetRepo.getWithComments('63cfc50e9ac50f9010a94d5b');
     console.log(tweet);
-    /*********************
-    CREATING THE TWEET 
+
+    //CREATING THE TWEET 
     // const tweet=await tweetRepo.create({content: 'Tweet with comment schema'});
     // console.log(tweet);
     // const comment= await Comment.create({content : 'new comment'});
@@ -25,7 +31,7 @@ app.listen(3000, async ()=>{
     // await tweet.save();
     // console.log(tweet);
 
-    **********************/
+    ****************************************************/
     
 
     /****************************************************

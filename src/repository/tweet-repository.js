@@ -38,7 +38,8 @@ class TweetRepiository{
     async getWithComments(id){
         try{
             //along with the tweet also populate the comment and get it all togeather
-            const tweet=await Tweet.findById(id).populate({path :'comments'});
+            //Documents returned from queries with the lean option enabled are plain javascript objects, not Mongoose Documents.
+            const tweet=await Tweet.findById(id).populate({path :'comments'}).lean();
             return tweet;
         }catch(error){
             console.log(error);
@@ -53,6 +54,19 @@ class TweetRepiository{
             console.log(error);
         }
     }
+
+    async getAll(offset, limit){
+        try{
+            //skip offset number of tweets 
+            //limit-> print only limit number of tweets 
+            //for eg: (2,4) -> skip first two tweets and print rest 4 tweets only
+            const tweet=await Tweet.find().skip(offset).limit(limit);
+            return tweet;
+        }catch(error){
+            console.log(error);
+        }
+    }
 }
+
 
 module.exports=TweetRepiository;
