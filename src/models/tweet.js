@@ -6,37 +6,22 @@ const mongoose= require('mongoose');
 const tweetSchema= new mongoose.Schema({
     content: {
         type: String,
-        reqired: true
+        reqired: true,
+        max: [250, 'Tweet cannot be more than 250 characters']
     },
-    userEmail:{
-        type:String
-    },
-    comments:[
+    //there will be multiple hashtags that will belong to a tweet
+    hashtags:[
         {
-            //we are storing comment ID here i.e. model ID and name of the model
-            type: mongoose.Schema.Types.ObjectId,
-            ref: 'Comment'
+            type:mongoose.Schema.Types.ObjectId,
+            ref: 'Hashtag'
         }
     ]
 
+    // userID, comments
 
-    /*********************
-    //comment will be an array here we are manually nesting schema inside another schema
-    comments:[
-        {
-            content:{
-                type:String,
-                required:true
-            }
-        }
-    ]
-    ***********************/
 }, {timestamps : true});
+//{timestamps : true } -> we are able to add created_at and updated_at in documents
 
-//VIRTUALS: Virtuals are document properties that you can get and set but that do not get persisted to MongoDB(not visible on mongoDB document in compass).
-tweetSchema.virtual('contentWithEmail').get(function process(){
-    return `${this.content} \nCreated by:  ${this.userEmail}`;
-});
 
 //create a model having a name 'Tweet' and will follow the tweetSchema
 const Tweet= mongoose.model('Tweet', tweetSchema);

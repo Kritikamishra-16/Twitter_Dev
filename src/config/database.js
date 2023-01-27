@@ -1,4 +1,4 @@
-//we will write the code to connect to database
+//we will write the code how to connect to database
 
 const mongoose= require('mongoose');
 
