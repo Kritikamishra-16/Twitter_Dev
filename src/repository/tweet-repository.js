@@ -20,20 +20,6 @@ class TweetRepiository{
         }
     }
 
-    async update(tweetId,data){
-        try{
-            //when we call findByIdAndUpdate() it will update the document properly but returns the old document
-            //const tweet=await Tweet.findByIdAndUpdate(tweetId,data);
-            //return tweet;
-
-            //inorder to return the updated content pass the options content as {new:true}
-            const tweet=await Tweet.findByIdAndUpdate(tweetId,data,{new: true});
-            return tweet;
-
-        }catch(error){
-            console.log(error);
-        }
-    }
 
     async getWithComments(id){
         try{

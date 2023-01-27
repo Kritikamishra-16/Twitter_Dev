@@ -1,0 +1,52 @@
+const {TweetRepository, HashtagRepository}= require('../repository/index');
+
+class TweetService{
+    constructor(){
+        //creating object of TweetRepository class to access all its functions
+        this.tweetRepository= new TweetRepository();
+        this.hashtagRepository=new HashtagRepository();
+    }
+
+    //writing a logic to create a tweet
+    async create(data){
+        const content= data.content;
+        //extracting all the hashtags present inside the tweet
+        let tags= content.match(/#[a-zA-Z0-9_]+/g); //this regex extract hashtags
+        tags=tags.map((tag)=>tag.substring(1)); // '#tweet'-> 'tweet'
+        
+
+        //creating the tweets
+        const tweet= await this.tweetRepository.create(data);
+        //getting all already present tags and then extracting only its title not the whole object
+        let alreadyPresentTags= await this.hashtagRepository.findByName(tags);
+        let titleOfPresentTags=alreadyPresentTags.map(tags=>tags.title);
+
+
+        //get all the new tags that are not already present
+        let newTags=tags.filter(tag=> !titleOfPresentTags.includes(tag));
+        //creating newTags as array of objects 
+        newTags=newTags.map(tag=>{
+            return {title: tag, tweets:[tweet.id]}
+        });
+
+
+        //creating all the new hashtags
+        await this.hashtagRepository.bulkCreate(newTags);
+        
+        //add new tweet id inside all the already present hashtags
+        alreadyPresentTags.forEach((tag) => {
+            tag.tweets.push(tweet.id);
+            tag.save();
+        });
+        return tweet;
+
+
+        //todo create hashtags and add here
+        /**
+         * 1.Bulkcreate in mongoose
+         * 2.Filter title of hashtag based on multiple tags
+         * 3.How to add tweet id inside all the hashtags
+         */
+    }
+}
+module.exports=TweetService;
