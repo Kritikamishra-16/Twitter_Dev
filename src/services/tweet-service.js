@@ -1,4 +1,4 @@
-const {TweetRepository, HashtagRepository}= require('../repository/index');
+import {TweetRepository, HashtagRepository} from '../repository/index.js';
 
 class TweetService{
     constructor(){
@@ -9,6 +9,7 @@ class TweetService{
 
     //writing a logic to create a tweet
     async create(data){
+
         const content= data.content;
         //extracting all the hashtags present inside the tweet
         let tags= content.match(/#[a-zA-Z0-9_]+/g); //this regex extract hashtags
@@ -17,6 +18,7 @@ class TweetService{
 
         //creating the tweets
         const tweet= await this.tweetRepository.create(data);
+
         //getting all already present tags and then extracting only its title not the whole object
         let alreadyPresentTags= await this.hashtagRepository.findByName(tags);
         let titleOfPresentTags=alreadyPresentTags.map(tags=>tags.title);
@@ -40,13 +42,12 @@ class TweetService{
         });
         return tweet;
 
-
-        //todo create hashtags and add here
+        //todos
         /**
          * 1.Bulkcreate in mongoose
          * 2.Filter title of hashtag based on multiple tags
          * 3.How to add tweet id inside all the hashtags
-         */
+         **/
     }
 }
-module.exports=TweetService;
+export default TweetService;

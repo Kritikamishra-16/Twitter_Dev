@@ -1,11 +1,11 @@
 //requiring tweet model here
-const Hashtag=require('../models/hashtags');
+import Hashtag from '../models/hashtags.js';
 
-class HashtagRepiository{
+class HashtagRepository{
     async create(data){
         try{
             const tag=await Hashtag.create(data);
-            returntag;
+            return tag;
         }catch(error){
             console.log(error);
         }
@@ -52,4 +52,4 @@ class HashtagRepiository{
 }
 
 
-module.exports=HashtagRepiository;
+export default HashtagRepository;

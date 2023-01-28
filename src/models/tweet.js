@@ -1,6 +1,6 @@
 //we are defining schema here and creating a model
 //schema is like a blueprint and models are actual instances that connect to the databases and do querying for you
-const mongoose= require('mongoose');
+import mongoose from 'mongoose';
 
 //schema
 const tweetSchema= new mongoose.Schema({
@@ -25,4 +25,5 @@ const tweetSchema= new mongoose.Schema({
 
 //create a model having a name 'Tweet' and will follow the tweetSchema
 const Tweet= mongoose.model('Tweet', tweetSchema);
-module.exports= Tweet;
+//exporting tweet model
+export default Tweet;

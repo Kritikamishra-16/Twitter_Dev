@@ -1,7 +1,7 @@
 //requiring tweet model here
-const Tweet=require('../models/tweet');
+import Tweet from '../models/tweet.js'
 
-class TweetRepiository{
+class TweetRepository{
     async create(data){
         try{
             const tweet=await Tweet.create(data);
@@ -55,4 +55,4 @@ class TweetRepiository{
 }
 
 
-module.exports=TweetRepiository;
+export default TweetRepository;
