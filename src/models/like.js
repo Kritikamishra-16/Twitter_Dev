@@ -14,6 +14,7 @@ const likeSchema=new mongoose.Schema({
         //it can refer to either Tweet or Comment model
         refPath: 'onModel'
     },
+    //id of the user who will like
     user:{
         type: mongoose.Schema.Types.ObjectId,
         ref: 'User',
