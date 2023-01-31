@@ -9,7 +9,14 @@ const tweetSchema= new mongoose.Schema({
         reqired: true,
         max: [250, 'Tweet cannot be more than 250 characters']
     },
-    // userID, comments
+    //a tweet can have many likes
+    likes:[
+        {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'Like'
+        }
+    ]
+       // userID, commentss
 
 }, {timestamps : true});
 //{timestamps : true } -> we are able to add created_at and updated_at in documents
